@@ -7,4 +7,10 @@ void playerMoveRight(Player * p);
 void playerMoveLeft(Player * p);
 void playerMoveUp(Player * p);
 void playerMoveDown(Player *p);
+
+void enemyMoveRight(Enemy * e);
+void enemyMoveLeft(Enemy * e);
+void enemyMoveUp(Enemy * e);
+void enemyMoveDown(Enemy * e);
+void enemyMove(Enemy * e);
 #endif //__CONTROLS_H__

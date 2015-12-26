@@ -18,6 +18,8 @@ int main (int argc, char **argv)
     noecho();/* Don't echo() while we do getch */
     curs_set(FALSE); // Don't display a cursor
     Player * p1=newPlayer(INIT_Y,INIT_X,INIT_POINT);
+    Enemy * e1=newEnemy(8,51,10);
+    Enemy * e2=newEnemy(5,71,10);
     int run=1;
     genLevel(SIZE);
 
@@ -41,6 +43,9 @@ int main (int argc, char **argv)
             run=0;
         };
 
+
+        enemyMove(e1);
+        enemyMove(e2);
             refresh();
 
 
