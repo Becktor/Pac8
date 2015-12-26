@@ -1,1 +1,2 @@
-# tictactoe
+# Game For SW-ENGINEERING 2 course...
+Working with ncurses to make a pacman like game in terminal.
