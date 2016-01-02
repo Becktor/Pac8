@@ -13,4 +13,5 @@ void enemyMoveLeft(Enemy * e);
 void enemyMoveUp(Enemy * e);
 void enemyMoveDown(Enemy * e);
 void enemyMove(Enemy * e);
+void enemyCharge(Enemy * e, Player * p);
 #endif //__CONTROLS_H__

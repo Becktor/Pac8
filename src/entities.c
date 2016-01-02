@@ -1,30 +1,41 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ncurses.h>
+
 typedef struct{
     int x;
     int y;
     int points;
 }Player;
 
-Player * newPlayer(int y, int x, int points){
+Player * newPlayer(int y, int x){
     Player *player=(Player*)malloc(sizeof(Player));
     player->x=x;
     player->y=y;
-    player->points=points;
+    player->points=0;
     return player;
 }
 
 typedef struct{
     int x;
     int y;
-    int speed;
+    float speed;
+    int holdCoin;
+    int value;
+    float lastMove;
+    int charge;
+    int dir;
 }Enemy;
 
-Enemy * newEnemy(int y, int x, int speed){
+Enemy * newEnemy(int y, int x, float speed,int value){
     Enemy * enemy=(Enemy*)malloc(sizeof(Enemy));
     enemy->x=x;
     enemy->y=y;
-    enemy->speed=speed;
+    enemy->speed=speed/100.0;
+    enemy->holdCoin=0;
+    enemy->value=value;
+    enemy->lastMove=0.0;
+    enemy->charge=0;
+    enemy->dir=0;
     return enemy;
 }
