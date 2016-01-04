@@ -54,7 +54,7 @@ int main (int argc, char **argv)
                 break;
 
             };
-            mvprintw(20,0,"points: %i",lvl->points);
+
             enemyMove(e1);
             enemyCharge(e1,p1); // checks if e1 should charge
             enemyMove(e2);
