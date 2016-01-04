@@ -6,8 +6,8 @@
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 #define LEVELS 8
 #define START_END_DEC 2
-void draw(int *level, int tmp){
 
+int draw(int *level, int tmp){
     if(level[tmp]==0){
         printw(" #");
     }else if(level[tmp]==1){
@@ -16,8 +16,9 @@ void draw(int *level, int tmp){
         printw(" 8");
     }else if(level[tmp]==9){
         printw(" O");
+        return 1;
     }
-
+    return 0;
 }
 
 int * getLevel(int levelno)
@@ -186,17 +187,17 @@ int * getLevel(int levelno)
     }
     return 0;
 }
-void genLevel(int size)
+int genLevel(int size)
 {
     int * level;
     int tmp[size-START_END_DEC];
     int end = rand()%2;
     int start = rand()%2;
-
+    int points=0;
     for(int i=0;i<size-START_END_DEC;i++){
         tmp[i]= rand()%LEVELS;
     }
-    for(int i=0;i<11;i++){
+    for(int i=0;i<10;i++){
         if(i<10){
             for(int k=0;k<size;k++){
                 if (k==0)
@@ -208,20 +209,14 @@ void genLevel(int size)
 
                 for(int j=0;j<10;j++){
                     int tmpe= i*10+j;
-                    draw(level,tmpe);
+                    points=points+draw(level,tmpe);
                 }
             }
-        }else
-            for(int n = 0;n<size*10;n++) if(n<10) printw("0%i",n); else printw("%i",n);
+        }
         printw("\n");
     }
-    mvprintw(12,0,"Points: %i",0);
-    mvprintw(14,0,"Move with A S W D collect the points and avoid the beast");
-    for(int i=0;i<size-2;i++){
-        mvprintw(16+i,10,"levl: %i",tmp[i]);
-    }
 
-
+    return points;
 }
 
 void drawPlayer(int playerPos, int * level){

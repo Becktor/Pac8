@@ -39,3 +39,13 @@ Enemy * newEnemy(int y, int x, float speed,int value){
     enemy->dir=0;
     return enemy;
 }
+
+typedef struct{
+    int points;
+}Level;
+
+Level * newLevel(int points){
+    Level *lvl= (Level*) malloc(sizeof(Level));
+    lvl->points=points;
+    return lvl;
+}

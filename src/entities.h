@@ -24,4 +24,10 @@ typedef struct{
 
 Enemy * newEnemy(int y, int x, float speed, int value);
 
+typedef struct{
+    int points;
+}Level;
+
+Level * newLevel(int points);
+
 #endif //__PLAYER_H__

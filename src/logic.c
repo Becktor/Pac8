@@ -12,7 +12,11 @@ void check(Player * p){
     if(mvinch(p->y,p->x)=='O') p->points=p->points+10;
     mvprintw(12,0,"Points: %i",p->points);
 }
-
+/////
+// Player Movement Left, Right, Up and Down
+// mvinch returns the value at the given position
+// check checks if player walks into a point and then increments the score
+/////
 void playerMoveRight(Player * p)
 {
     int x= p->x;
@@ -22,7 +26,6 @@ void playerMoveRight(Player * p)
         x=x+2;
         p->x=x;
         check(p);
-
         mvprintw(y, x, "8");
         refresh();
     }
@@ -36,7 +39,6 @@ void playerMoveLeft(Player * p){
         x=x-2;
         p->x=x;
         check(p);
-
         mvprintw(y, x, "8");
         refresh();
     }
@@ -50,14 +52,12 @@ void playerMoveUp(Player * p){
         y=y-1;
         p->y=y;
         check(p);
-
         mvprintw(y, x, "8");
         refresh();
     }
 }
 
 void playerMoveDown(Player * p){
-
     int x= p->x;
     int y= p->y;
     if(mvinch(y+1,x)!='#'){
@@ -65,12 +65,14 @@ void playerMoveDown(Player * p){
         y=y+1;
         p->y=y;
         check(p);
-
         mvprintw(y, x, "8");
         refresh();
     }
 }
-
+/////
+// Checks if Enemy walks into a point for point recreation
+// when it leaves that pos again
+/////
 void enemyCoinCheck(Enemy * e){
     int x= e->x;
     int y= e->y;
@@ -79,6 +81,11 @@ void enemyCoinCheck(Enemy * e){
     }else  e->holdCoin=0;
 }
 
+/////
+// Enemy movement Left, Right, Up and Down
+// Checks if it is on a point position if it is it redraws the point
+// otherwise it moves the enemy
+/////
 
 void enemyMoveRight(Enemy * e)
 {
@@ -87,7 +94,6 @@ void enemyMoveRight(Enemy * e)
     if(mvinch(y,x+2)!='#'){
         if(e->holdCoin==1)  mvprintw(y, x, "O");
         else mvprintw(y,x," ");
-
         x=x+2;
         e->x=x;
         enemyCoinCheck(e);
@@ -105,7 +111,6 @@ void enemyMoveLeft(Enemy * e){
     if(mvinch(y,x-2)!='#'){
         if(e->holdCoin==1)  mvprintw(y, x, "O");
         else mvprintw(y,x," ");
-
         x=x-2;
         e->x=x;
         enemyCoinCheck(e);
@@ -123,7 +128,6 @@ void enemyMoveUp(Enemy * e){
     if(mvinch(y-1,x)!='#'){
         if(e->holdCoin==1)  mvprintw(y, x, "O");
         else mvprintw(y,x," ");
-
         y=y-1;
         e->y=y;
         enemyCoinCheck(e);
@@ -136,7 +140,6 @@ void enemyMoveUp(Enemy * e){
 }
 
 void enemyMoveDown(Enemy * e){
-
     int x= e->x;
     int y= e->y;
     if(mvinch(y+1,x)!='#'){
@@ -151,32 +154,73 @@ void enemyMoveDown(Enemy * e){
     }else{
         e->charge=0;
     }
-
 }
 
+//////
+// This function checks the space between the player and enemy
+// if it has a wall between them then the enemy will not notice
+// or follow the player
+/////
+int obstructionCheck(int enemyPos, int playerPos, int xOrY,int def){
+    if(enemyPos>playerPos && def == 0){
+        for(int i = playerPos; i<enemyPos;i++){
+            if(mvinch(xOrY, i) == '#') return 0;
+        }
+    }
+    if(enemyPos>playerPos && def == 1){
+        for(int i = playerPos; i<enemyPos;i++){
+            if(mvinch(i,xOrY) == '#') return 0;
+        }
+    }
+    if(playerPos>enemyPos && def == 0){
+        for(int i = enemyPos; i<playerPos;i++){
+            if(mvinch(xOrY, i) == '#') return 0;
+        }
+    }
+    if(playerPos>enemyPos && def == 1){
+        for(int i = enemyPos; i<playerPos;i++){
+            if(mvinch(i,xOrY) == '#') return 0;
+        }
+    }
+    return 1;
+}
+
+/////
+// enemyCharge enables the enemy to charge the player if it has
+// LOS(Line Of Sight), when enemy charges it will move one direction
+// until it reaches a wall or the player.
+/////
 void enemyCharge(Enemy * e, Player * p){
     int x1=e->x;
     int y1=e->y;
     int x2=p->x;
     int y2=p->y;
+    int charge=0;
     if(DIST(x1,y1,x2,y2)<10){
         if(x1==x2){
-            e->charge=1;
-
-            if(y1>y2)e->dir=Up;
-            else e->dir=Down;
-            mvprintw(15,0,"mound %i % i",e->charge, e->dir);
+            charge=obstructionCheck(y1,y2,x1,1);
+            if(charge==1){
+                e->charge=charge;
+                if(y1>y2)e->dir=Up;
+                else e->dir=Down;
+            }
         }
         if(y1==y2){
-            e->charge=1;
-
-            if(x1>x2)e->dir=Left;
-            else  e->dir=Right;
-            mvprintw(15,0,"found %i % i",e->charge, e->dir);
+            charge=obstructionCheck(y1,y2,x1,1);
+            if(charge==1){
+                charge=obstructionCheck(x1,x2,y1,0);
+                e->charge=charge;
+                if(x1>x2)e->dir=Left;
+                else  e->dir=Right;
+            }
         }
     }
 }
-
+/////
+// enemyMove is the randomiser for the enemy movement
+// and sets the enemy speed. We use the clock speed
+// to determine it.
+/////
 void enemyMove(Enemy * e){
     int tmp = 5;
     float curT = (float) clock()/ 1000000.0F;
@@ -188,8 +232,6 @@ void enemyMove(Enemy * e){
             tmp=e->dir;
         }
     }
-
-
     switch(tmp){
 
     case 0:
@@ -207,7 +249,5 @@ void enemyMove(Enemy * e){
     case 5:
         break;
     };
-
-
 
 }
