@@ -64,7 +64,7 @@ int main (int argc, char **argv)
 
 
             if(p1->points>=lvl->points*10) run=0;
-            mvprintw(12,0,"Points: %i",0);
+            mvprintw(12,0,"Points: %i",p1->points);
             mvprintw(14,0,"Move with A S W D collect the points and avoid the X");
             mvprintw(16,0,"Restart with B" );
             refresh();
@@ -90,8 +90,8 @@ int main (int argc, char **argv)
             move(0,0);
             refresh();
             break;
-            endwin(); // End curses mode
         }
     }
     clear();
+    endwin(); // End curses mode
 }
