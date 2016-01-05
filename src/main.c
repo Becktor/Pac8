@@ -28,8 +28,8 @@ int main (int argc, char **argv)
         Enemy * e2=newEnemy(5,71,INIT_ENEMY_SPEED,0);
         Enemy * e3=newEnemy(1,21,INIT_ENEMY_SPEED,0);
         lvl->points=genLevel(SIZE);
-        int run=1;
-        while(run){
+
+        while(lvl->game){
             usleep(1);
             char c='R';
             c=getch();
@@ -48,7 +48,7 @@ int main (int argc, char **argv)
                 playerMoveRight(p1);
                 break;
             case 'b':
-                run=0;
+                lvl->game=0;
                 break;
             case 'R':
                 break;
@@ -57,13 +57,16 @@ int main (int argc, char **argv)
 
             enemyMove(e1);
             enemyCharge(e1,p1); // checks if e1 should charge
+            if(lvl->game==1) lvl->game=playerCaught(e1,p1);
             enemyMove(e2);
             enemyCharge(e2,p1); // checks if e2 should charge
+            if(lvl->game==1) lvl->game=playerCaught(e2,p1);
             enemyMove(e3);
             enemyCharge(e3,p1); // checks if e3 should charge
+            if(lvl->game==1) lvl->game=playerCaught(e3,p1);
 
 
-            if(p1->points>=lvl->points*10) run=0;
+            if(p1->points>=lvl->points*10) lvl->game=0;
             mvprintw(12,0,"Points: %i",p1->points);
             mvprintw(14,0,"Move with A S W D collect the points and avoid the X");
             mvprintw(16,0,"Restart with B" );
@@ -80,6 +83,7 @@ int main (int argc, char **argv)
         mvprintw(4,15,"Game Over");
         mvprintw(6,0,"Pres q to quit or any other to play again");
         refresh();
+        sleep(1);
         char g = getchar();
         switch(g){
         case 'q':

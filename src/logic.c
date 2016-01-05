@@ -190,6 +190,11 @@ int obstructionCheck(int enemyPos, int playerPos, int xOrY,int def){
 // LOS(Line Of Sight), when enemy charges it will move one direction
 // until it reaches a wall or the player.
 /////
+int playerCaught(Enemy * e, Player * p){
+    if(e->x==p->x && e->y==p->y)
+        return 0;
+    return 1;
+}
 void enemyCharge(Enemy * e, Player * p){
     int x1=e->x;
     int y1=e->y;

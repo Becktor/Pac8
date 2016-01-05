@@ -1,6 +1,6 @@
 #include "entities.h"
-#ifndef _CONTROLS__H__
-#define __CONTROLS_H__
+#ifndef _ENTITIES__H__
+#define __ENTITIES_H__
 
 
 void playerMoveRight(Player * p);
@@ -14,4 +14,5 @@ void enemyMoveUp(Enemy * e);
 void enemyMoveDown(Enemy * e);
 void enemyMove(Enemy * e);
 void enemyCharge(Enemy * e, Player * p);
-#endif //__CONTROLS_H__
+int playerCaught(Enemy *e, Player * p);
+#endif //__ENTITIES_H__
