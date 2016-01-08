@@ -3,6 +3,7 @@
 #include "ncurses.h"
 #include "pac8.h"
 
+int gg2 = 1;
 int main (int argc, char **argv)
 {
     srand(time(0));

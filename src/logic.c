@@ -20,9 +20,9 @@ void playerMoveRight(Player * p)
 {
     int x= p->x;
     int y= p->y;
-    if(mvinch(y,x+2)!='#'){
+    if(mvinch(y,x+1)!='#'){
         mvprintw(y,x," ");
-        x=x+2;
+        x++;
         p->x=x;
         check(p);
         mvprintw(y, x, "8");
@@ -33,9 +33,9 @@ void playerMoveRight(Player * p)
 void playerMoveLeft(Player * p){
     int x= p->x;
     int y= p->y;
-    if(mvinch(y,x-2)!='#'){
+    if(mvinch(y,x-1)!='#'){
         mvprintw(y,x," ");
-        x=x-2;
+        x--;
         p->x=x;
         check(p);
         mvprintw(y, x, "8");
@@ -117,10 +117,10 @@ void enemyMoveRight(Enemy * e)
 {
     int x= e->x;
     int y= e->y;
-    if(mvinch(y,x+2)!='#'){
+    if(mvinch(y,x+1)!='#'){
         if(e->holdCoin==1)  mvprintw(y, x, "O");
         else mvprintw(y,x," ");
-        x=x+2;
+        x++;
         e->x=x;
         enemyCoinCheck(e);
         e->dir=Right;
@@ -134,10 +134,10 @@ void enemyMoveRight(Enemy * e)
 void enemyMoveLeft(Enemy * e){
     int x= e->x;
     int y= e->y;
-    if(mvinch(y,x-2)!='#'){
+    if(mvinch(y,x-1)!='#'){
         if(e->holdCoin==1)  mvprintw(y, x, "O");
         else mvprintw(y,x," ");
-        x=x-2;
+        x--;
         e->x=x;
         enemyCoinCheck(e);
         e->dir=Left;

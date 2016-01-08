@@ -6,14 +6,16 @@
 #include "levelGen.h"
 #include "logic.h"
 
-#define SIZE  4
+#define SIZE_CONSTANT  10
 #define INIT_Y 1
-#define INIT_X 3
+#define INIT_X 1
 #define INIT_ENEMY_SPEED 20
 #define AMOUNT_OF_ENEMIES 3
 
 int pacGame(){
-
+    int mx=0, my=0;
+    getmaxyx(stdscr, mx, my);
+    int size=my/SIZE_CONSTANT;
     Enemy * enemies[AMOUNT_OF_ENEMIES];
     timeout(0);
     raw();/* Line buffering disabled*/
@@ -22,14 +24,14 @@ int pacGame(){
     curs_set(FALSE); // Don't display a cursor
     Level * lvl=newLevel(0);
     Player * p1=newPlayer(INIT_Y,INIT_X);
-    Enemy * e1=newEnemy(8,51,INIT_ENEMY_SPEED,0);
-    Enemy * e2=newEnemy(5,71,INIT_ENEMY_SPEED,0);
-    Enemy * e3=newEnemy(1,21,INIT_ENEMY_SPEED,0);
+    Enemy * e1=newEnemy(8,10,INIT_ENEMY_SPEED,0);
+    Enemy * e2=newEnemy(5,30,INIT_ENEMY_SPEED,0);
+    Enemy * e3=newEnemy(1,50,INIT_ENEMY_SPEED,0);
     enemies[0]=e1;
     enemies[1]=e2;
     enemies[2]=e3;
-
-    lvl->points=genLevel(SIZE);
+    lvl->points=100;
+    genLevel(size);
 
     while(lvl->game){
         usleep(1);
@@ -50,7 +52,7 @@ int pacGame(){
     erase();
     refresh();
     move(0,0);
-    mvprintw(4,15,"Game Over");
+    mvprintw(4,15,"Game Over %i %i",mx/20, my);
     mvprintw(6,0,"Pres q to quit or any other to play again");
     refresh();
     sleep(0.5);

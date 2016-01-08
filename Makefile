@@ -1,4 +1,5 @@
 TARGET = bin/PacEight.o
+
 LIBS = -lcurses
 CC = gcc
 CFLAGS = -Ofast -g -Wall
@@ -7,6 +8,7 @@ CFLAGS = -Ofast -g -Wall
 
 default: clean $(TARGET)
 all: default
+
 
 OBJECTS = $(patsubst %.c, %.o, $(wildcard src/*.c))
 HEADERS = $(wildcard src/*.h)
@@ -21,6 +23,8 @@ $(TARGET): $(OBJECTS)
 	@mkdir -p bin
 	@$(CC) $(OBJECTS) $(LIBS) -o $@
 	@echo "PacEight compiled with" $(CFLAGS)
+
+
 
 clean:
 	@-rm -f src/*.o

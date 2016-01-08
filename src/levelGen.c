@@ -4,19 +4,26 @@
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 #define LEVELS 8
 #define START_END_DEC 2
+#define MODULE_LENGTH 10
 
-int draw(int *level, int tmp){
-    if(level[tmp]==0){
-        printw(" #");
-    }else if(level[tmp]==1){
-        printw("  ");
-    }else if(level[tmp]==3){
-        printw(" 8");
-    }else if(level[tmp]==9){
-        printw(" O");
-        return 1;
+void drawModule(int *level,int pos){
+
+    for(int y=0; y < MODULE_LENGTH;y++){
+
+        for(int x=0; x< MODULE_LENGTH;x++ ){
+
+            int tmp=y*10+x;
+            if(level[tmp]==0){
+                mvprintw(y,pos+x,"#");
+            }else if(level[tmp]==1){
+                mvprintw(y,pos+x," ");
+            }else if(level[tmp]==3){
+                mvprintw(y,pos+x,"8");
+            }else if(level[tmp]==9){
+                mvprintw(y,pos+x,"O");
+            }
+        }
     }
-    return 0;
 }
 
 int * getLevel(int levelno)
@@ -154,6 +161,17 @@ int * getLevel(int levelno)
                           1,9,1,1,1,1,1,1,1,0,
                           0,0,0,0,0,0,0,0,0,0 };
 
+    static int test[100]={0,0,0,0,0,0,0,0,0,0,
+                          0,1,1,1,1,1,1,1,1,0,
+                          0,1,1,1,1,1,1,1,1,0,
+                          0,1,1,1,1,1,1,1,1,0,
+                          0,1,1,1,9,9,1,1,1,0,
+                          0,1,1,1,9,9,1,1,1,0,
+                          0,1,1,1,1,1,1,1,1,0,
+                          0,1,1,1,1,1,1,1,1,0,
+                          0,1,1,1,1,1,1,1,1,0,
+                          0,0,0,0,0,0,0,0,0,0 };
+
     switch(levelno) {
     case 0 :
         return l0;
@@ -179,7 +197,8 @@ int * getLevel(int levelno)
         return end0;
     case 103 :
         return end1;
-
+    case 999 :
+        return test;
     default :
         printf("no such level\n" );
     }
@@ -192,27 +211,31 @@ int genLevel(int size)
     int end = rand()%2;
     int start = rand()%2;
     int points=0;
-    for(int i=0;i<size-START_END_DEC;i++){
-        tmp[i]= rand()%LEVELS;
-    }
-    for(int i=0;i<10;i++){
-        if(i<10){
-            for(int k=0;k<size;k++){
-                if (k==0)
-                    level = getLevel(100+start);
-                else if (k==size-1)
-                    level = getLevel(102+end);
-                else
-                    level = getLevel(tmp[k-1]);
+    int testLevel=999;
 
-                for(int j=0;j<10;j++){
-                    int tmpe= i*10+j;
-                    points=points+draw(level,tmpe);
-                }
-            }
+
+
+        for(int i=0;i<size-START_END_DEC;i++){
+            tmp[i]= rand()%LEVELS;
         }
-        printw("\n");
-    }
+
+        for(int k=0;k<size;k++){
+
+            if (k==0){
+                level = getLevel(100+start);
+                drawModule(level,k*10);
+            }
+            else if (k==size-1){
+                level = getLevel(102+end);
+                drawModule(level,k*10);
+            }
+
+            else{
+                level = getLevel(tmp[k-1]);
+                drawModule(level,k*10);
+            }
+
+        }
 
     return points;
 }
