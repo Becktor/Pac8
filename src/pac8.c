@@ -30,8 +30,7 @@ int pacGame(){
     enemies[0]=e1;
     enemies[1]=e2;
     enemies[2]=e3;
-    lvl->points=100;
-    genLevel(size);
+    lvl->points = genLevel(size);
 
     while(lvl->game){
         usleep(1);
@@ -52,7 +51,7 @@ int pacGame(){
     erase();
     refresh();
     move(0,0);
-    mvprintw(4,15,"Game Over %i %i",mx/20, my);
+    mvprintw(4,15,"Game Over %i %i",mx/10, my);
     mvprintw(6,0,"Pres q to quit or any other to play again");
     refresh();
     sleep(0.5);

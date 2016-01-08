@@ -15,15 +15,19 @@ void first_test()
 }
 
 void second_test(){ // check if player moves if he walks into a wall
-    int x=3; // starting coordinates
+    int x=1; // starting coordinates
     int y=1;
     int test=-1;
     Player * p = newPlayer(y,x);
     initscr();/* Start curses mode*/
     genLevel(test);
     playerMoveLeft(p); // player moves into a wall
-    assert(p->x==x);
-    assert(p->y==y);
+    printw("test");
+    //assert(p->x==x);
+    move(1,10);
+    mvprintw(1,1,"test");
+    //assert(p->y==y);
+    refresh();
     endwin(); // End curses mode
 }
 

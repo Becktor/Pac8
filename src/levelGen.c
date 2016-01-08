@@ -6,8 +6,8 @@
 #define START_END_DEC 2
 #define MODULE_LENGTH 10
 
-void drawModule(int *level,int pos){
-
+int drawModule(int *level,int pos){
+    int points=0;
     for(int y=0; y < MODULE_LENGTH;y++){
 
         for(int x=0; x< MODULE_LENGTH;x++ ){
@@ -21,9 +21,11 @@ void drawModule(int *level,int pos){
                 mvprintw(y,pos+x,"8");
             }else if(level[tmp]==9){
                 mvprintw(y,pos+x,"O");
+                points++;
             }
         }
     }
+    return points;
 }
 
 int * getLevel(int levelno)
@@ -214,7 +216,7 @@ int genLevel(int size)
     int testLevel=999;
 
 
-
+    if(size>0){
         for(int i=0;i<size-START_END_DEC;i++){
             tmp[i]= rand()%LEVELS;
         }
@@ -223,20 +225,23 @@ int genLevel(int size)
 
             if (k==0){
                 level = getLevel(100+start);
-                drawModule(level,k*10);
+                points=points+drawModule(level,k*10);
             }
             else if (k==size-1){
                 level = getLevel(102+end);
-                drawModule(level,k*10);
+                points=points+drawModule(level,k*10);
             }
 
             else{
                 level = getLevel(tmp[k-1]);
-                drawModule(level,k*10);
+                points=points+drawModule(level,k*10);
             }
 
         }
-
+    }else{
+        level=getLevel(testLevel);
+        points=points+drawModule(level,0);
+    }
     return points;
 }
 
