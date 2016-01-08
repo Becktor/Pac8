@@ -1,10 +1,9 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
-#include "levelGen.h"
-#include "entities.h"
 #include <time.h>
 #include <math.h>
+#include "levelGen.h"
+#include "entities.h"
 
 #define DIST(x1,y1,x2,y2)  (sqrt(pow(x1-x2,2)+pow(y1-y2,2)))
 enum {Left=0, Up=1, Down=2, Right=3};
@@ -68,6 +67,33 @@ void playerMoveDown(Player * p){
         mvprintw(y, x, "8");
         refresh();
     }
+}
+
+void playerMove(Player * p, Level * lvl){
+    char c='R';
+    c=getch();
+    switch(c){
+
+    case 'a':
+        playerMoveLeft(p);
+        break;
+    case 'w':
+        playerMoveUp(p);
+        break;
+    case 's':
+        playerMoveDown(p);
+        break;
+    case 'd':
+        playerMoveRight(p);
+        break;
+    case 'b':
+        lvl->game=0;
+        break;
+    case 'R':
+        break;
+
+    };
+
 }
 /////
 // Checks if Enemy walks into a point for point recreation
@@ -255,4 +281,17 @@ void enemyMove(Enemy * e){
         break;
     };
 
+}
+
+void moveAll(Enemy **es,Player * p, Level * lvl){
+    playerMove(p, lvl);
+    enemyMove(es[0]);
+    enemyCharge(es[0],p); // checks if e1 should charge
+    if(lvl->game==1) lvl->game=playerCaught(es[0],p);
+    enemyMove(es[1]);
+    enemyCharge(es[1],p); // checks if e2 should charge
+    if(lvl->game==1) lvl->game=playerCaught(es[1],p);
+    enemyMove(es[2]);
+    enemyCharge(es[2],p); // checks if e3 should charge
+    if(lvl->game==1) lvl->game=playerCaught(es[2],p);
 }

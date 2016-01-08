@@ -1,6 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include <ncurses.h>
 
 typedef struct{
     int x;

@@ -1,13 +1,13 @@
 #include "entities.h"
-#ifndef _ENTITIES__H__
-#define __ENTITIES_H__
+#ifndef _LOGIC__H__
+#define __LOGIC_H__
 
 
 void playerMoveRight(Player * p);
 void playerMoveLeft(Player * p);
 void playerMoveUp(Player * p);
 void playerMoveDown(Player *p);
-
+void playerMove(Player * p, Level * lvl);
 void enemyMoveRight(Enemy * e);
 void enemyMoveLeft(Enemy * e);
 void enemyMoveUp(Enemy * e);
@@ -15,4 +15,5 @@ void enemyMoveDown(Enemy * e);
 void enemyMove(Enemy * e);
 void enemyCharge(Enemy * e, Player * p);
 int playerCaught(Enemy *e, Player * p);
-#endif //__ENTITIES_H__
+void moveAll(Enemy ** es, Player *p, Level * lvl);
+#endif //__LOGIC_H__

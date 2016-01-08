@@ -1,7 +1,5 @@
-#include <stdio.h>
 #include <ncurses.h>
 #include <stdlib.h>
-#include <time.h>
 
 #define NELEMS(x)  (sizeof(x) / sizeof((x)[0]))
 #define LEVELS 8
