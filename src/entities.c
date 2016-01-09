@@ -11,12 +11,13 @@ Player * newPlayer(int y, int x){
     Player *player=(Player*)malloc(sizeof(Player));
     if (player == NULL) {
         throwError("malloc failed");
+    }if(x<0 || y<0) {
+        player->x=1;
+        player->y=1;
+    }else{
+        player->x=x;
+        player->y=y;
     }
-    if(x<0 || y<0) {
-        throwError("coordinates cannot be negative");
-    }
-    player->x=x;
-    player->y=y;
     player->points=0;
     return player;
 }
@@ -37,10 +38,12 @@ Enemy * newEnemy(int y, int x, float speed){
         throwError("malloc failed");
     }
     if(x<0 || y<0) {
-        throwError("coordinates cannot be negative");
+        enemy->x=1;
+        enemy->y=1;
+    }else{
+        enemy->x=x;
+        enemy->y=y;
     }
-    enemy->x=x;
-    enemy->y=y;
     enemy->speed=speed/100.0;
     enemy->holdCoin=0;
     enemy->lastMove=0.0;

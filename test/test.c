@@ -11,7 +11,9 @@ void first_test()
     // will test if we can create a player with a negative coordinates
     int x = -1;
     int y = -1;
+    printf("initialize player with negative coordinates (-1,-1)\n");
     Player * p = newPlayer(y,x);
+    printf("player value is x: %i y: %i \n",p->x,p->y);
 }
 
 void second_test(){ // check if player moves if he walks into a wall
@@ -29,8 +31,11 @@ void second_test(){ // check if player moves if he walks into a wall
 }
 
 int main(){
-    printf("Try to move player into wall");
+    printf("Try to move player into wall\n");
     second_test();
-    printf("Player has same position");
+    printf("Player has same position\n");
     first_test();
+    char buffer[] = {0xE2, 0x98, 0x8};
+    printf("%s\n",buffer);
+
 }

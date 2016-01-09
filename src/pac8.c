@@ -9,7 +9,7 @@
 #define SIZE_CONSTANT  10
 #define INIT_Y 1
 #define INIT_X 1
-#define INIT_ENEMY_SPEED 20
+#define INIT_ENEMY_SPEED 10
 #define AMOUNT_OF_ENEMIES 3
 
 int pacGame(){
@@ -22,6 +22,8 @@ int pacGame(){
     keypad(stdscr, TRUE);/* We get F1, F2 etc..	*/
     noecho();/* Don't echo() while we do getch */
     curs_set(FALSE); // Don't display a cursor
+    start_color();			/* Start color 			*/
+
     Level * lvl=newLevel(0);
     Player * p1=newPlayer(INIT_Y,INIT_X);
     Enemy * e1=newEnemy(8,10,INIT_ENEMY_SPEED,0);
@@ -51,6 +53,8 @@ int pacGame(){
     erase();
     refresh();
     move(0,0);
+
+
     mvprintw(4,15,"Game Over %i %i",mx/10, my);
     mvprintw(6,0,"Pres q to quit or any other to play again");
     refresh();
@@ -65,5 +69,7 @@ int pacGame(){
         move(0,0);
         refresh();
     }
+
+
     return 1;
 }

@@ -5,10 +5,15 @@
 #include "levelGen.h"
 #include "entities.h"
 
+#define WALL 10120
+#define COIN 847
+#define PLAYER 9786
 #define DIST(x1,y1,x2,y2)  (sqrt(pow(x1-x2,2)+pow(y1-y2,2)))
+char *player = "☺";
+
 enum {Left=0, Up=1, Down=2, Right=3};
 void check(Player * p){
-    if(mvinch(p->y,p->x)=='O') p->points=p->points+10;
+    if((int)mvinch(p->y,p->x)==COIN) p->points=p->points+10;
     mvprintw(12,0,"Points: %i",p->points);
 }
 /////
@@ -16,16 +21,32 @@ void check(Player * p){
 // mvinch returns the value at the given position
 // check checks if player walks into a point and then increments the score
 /////
+void drawEnemy(int y, int x){
+
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    attron(COLOR_PAIR(1));
+    mvprintw(y,x,"X");
+    attroff(COLOR_PAIR(1));
+
+}
+void drawCoin(int y, int x){
+
+    init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+    attron(COLOR_PAIR(3));
+    mvprintw(y,x,"O");
+    attroff(COLOR_PAIR(3));
+
+}
 void playerMoveRight(Player * p)
 {
     int x= p->x;
     int y= p->y;
-    if(mvinch(y,x+1)!='#'){
+    if((int) mvinch(y,x+1)!=WALL){
         mvprintw(y,x," ");
         x++;
         p->x=x;
         check(p);
-        mvprintw(y, x, "8");
+        mvprintw(y, x, player);
         refresh();
     }
 }
@@ -33,12 +54,12 @@ void playerMoveRight(Player * p)
 void playerMoveLeft(Player * p){
     int x= p->x;
     int y= p->y;
-    if(mvinch(y,x-1)!='#'){
+    if((int)mvinch(y,x-1)!=WALL){
         mvprintw(y,x," ");
         x--;
         p->x=x;
         check(p);
-        mvprintw(y, x, "8");
+        mvprintw(y, x, player);
         refresh();
     }
 }
@@ -46,12 +67,12 @@ void playerMoveLeft(Player * p){
 void playerMoveUp(Player * p){
     int x= p->x;
     int y= p->y;
-    if(mvinch(y-1,x)!='#'){
+    if((int) mvinch(y-1,x)!=WALL){
         mvprintw(y,x," ");
         y=y-1;
         p->y=y;
         check(p);
-        mvprintw(y, x, "8");
+        mvprintw(y, x, player);
         refresh();
     }
 }
@@ -59,17 +80,19 @@ void playerMoveUp(Player * p){
 void playerMoveDown(Player * p){
     int x= p->x;
     int y= p->y;
-    if(mvinch(y+1,x)!='#'){
+    if((int)mvinch(y+1,x)!=WALL){
         mvprintw(y,x," ");
         y=y+1;
         p->y=y;
         check(p);
-        mvprintw(y, x, "8");
+        mvprintw(y, x, player);
         refresh();
     }
 }
 
 void playerMove(Player * p, Level * lvl){
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    attron(COLOR_PAIR(2));
     char c='R';
     c=getch();
     switch(c){
@@ -93,7 +116,7 @@ void playerMove(Player * p, Level * lvl){
         break;
 
     };
-
+    attroff(COLOR_PAIR(2));
 }
 /////
 // Checks if Enemy walks into a point for point recreation
@@ -102,7 +125,7 @@ void playerMove(Player * p, Level * lvl){
 void enemyCoinCheck(Enemy * e){
     int x= e->x;
     int y= e->y;
-    if(mvinch(y,x)=='O'){
+    if( (int) mvinch(y,x)==COIN){
         e->holdCoin=1;
     }else  e->holdCoin=0;
 }
@@ -117,14 +140,14 @@ void enemyMoveRight(Enemy * e)
 {
     int x= e->x;
     int y= e->y;
-    if(mvinch(y,x+1)!='#'){
-        if(e->holdCoin==1)  mvprintw(y, x, "O");
+    if((int)mvinch(y,x+1)!=WALL){
+        if(e->holdCoin==1) drawCoin(y,x);
         else mvprintw(y,x," ");
         x++;
         e->x=x;
         enemyCoinCheck(e);
         e->dir=Right;
-        mvprintw(y, x, "X");
+        drawEnemy(y,x);
         refresh();
     }else{
         e->charge=0;
@@ -134,14 +157,14 @@ void enemyMoveRight(Enemy * e)
 void enemyMoveLeft(Enemy * e){
     int x= e->x;
     int y= e->y;
-    if(mvinch(y,x-1)!='#'){
-        if(e->holdCoin==1)  mvprintw(y, x, "O");
+    if((int)mvinch(y,x-1)!=WALL){
+        if(e->holdCoin==1) drawCoin(y,x);
         else mvprintw(y,x," ");
         x--;
         e->x=x;
         enemyCoinCheck(e);
         e->dir=Left;
-        mvprintw(y, x, "X");
+        drawEnemy(y,x);
         refresh();
     }else{
         e->charge=0;
@@ -151,14 +174,14 @@ void enemyMoveLeft(Enemy * e){
 void enemyMoveUp(Enemy * e){
     int x= e->x;
     int y= e->y;
-    if(mvinch(y-1,x)!='#'){
-        if(e->holdCoin==1)  mvprintw(y, x, "O");
+    if((int)mvinch(y-1,x)!=WALL){
+        if(e->holdCoin==1) drawCoin(y,x);
         else mvprintw(y,x," ");
         y=y-1;
         e->y=y;
         enemyCoinCheck(e);
         e->dir=Up;
-        mvprintw(y, x, "X");
+        drawEnemy(y,x);
         refresh();
     }else{
         e->charge=0;
@@ -168,14 +191,14 @@ void enemyMoveUp(Enemy * e){
 void enemyMoveDown(Enemy * e){
     int x= e->x;
     int y= e->y;
-    if(mvinch(y+1,x)!='#'){
-        if(e->holdCoin==1)  mvprintw(y, x, "O");
+    if((int)mvinch(y+1,x)!=WALL){
+        if(e->holdCoin==1) drawCoin(y,x);
         else mvprintw(y,x," ");
         y=y+1;
         e->y=y;
         enemyCoinCheck(e);
         e->dir=Down;
-        mvprintw(y, x, "X");
+        drawEnemy(y,x);
         refresh();
     }else{
         e->charge=0;
@@ -190,22 +213,22 @@ void enemyMoveDown(Enemy * e){
 int obstructionCheck(int enemyPos, int playerPos, int xOrY,int def){
     if(enemyPos>playerPos && def == 0){
         for(int i = playerPos; i<enemyPos;i++){
-            if(mvinch(xOrY, i) == '#') return 0;
+            if((int)mvinch(xOrY, i) == WALL) return 0;
         }
     }
     if(enemyPos>playerPos && def == 1){
         for(int i = playerPos; i<enemyPos;i++){
-            if(mvinch(i,xOrY) == '#') return 0;
+            if((int)mvinch(i,xOrY) == WALL) return 0;
         }
     }
     if(playerPos>enemyPos && def == 0){
         for(int i = enemyPos; i<playerPos;i++){
-            if(mvinch(xOrY, i) == '#') return 0;
+            if((int)mvinch(xOrY, i) == WALL) return 0;
         }
     }
     if(playerPos>enemyPos && def == 1){
         for(int i = enemyPos; i<playerPos;i++){
-            if(mvinch(i,xOrY) == '#') return 0;
+            if((int)mvinch(i,xOrY) == WALL) return 0;
         }
     }
     return 1;
@@ -253,6 +276,10 @@ void enemyCharge(Enemy * e, Player * p){
 // to determine it.
 /////
 void enemyMove(Enemy * e){
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+
+    attron(COLOR_PAIR(1));
+
     int tmp = 5;
     float curT = (float) clock()/ 1000000.0F;
     //mvprintw(16,0,"%f %f",e->lastMove, curT);
@@ -280,7 +307,7 @@ void enemyMove(Enemy * e){
     case 5:
         break;
     };
-
+    attroff(COLOR_PAIR(1));
 }
 
 void moveAll(Enemy **es,Player * p, Level * lvl){
