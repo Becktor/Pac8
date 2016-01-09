@@ -22,17 +22,15 @@ void second_test(){ // check if player moves if he walks into a wall
     initscr();/* Start curses mode*/
     genLevel(test);
     playerMoveLeft(p); // player moves into a wall
-    printw("test");
-    //assert(p->x==x);
-    move(1,10);
-    mvprintw(1,1,"test");
-    //assert(p->y==y);
+    assert(p->x==x);
+    assert(p->y==y);
     refresh();
     endwin(); // End curses mode
 }
 
 int main(){
-
+    printf("Try to move player into wall");
     second_test();
+    printf("Player has same position");
     first_test();
 }
