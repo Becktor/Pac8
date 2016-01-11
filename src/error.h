@@ -1,5 +1,3 @@
-#ifndef _ERROR__H__
-#define __ERROR_H__
+#pragma once
 
 void throwError(char *errorMsg);
-#endif //__ERROR__H__

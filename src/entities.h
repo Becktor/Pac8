@@ -1,5 +1,4 @@
-#ifndef _PLAYER__H__
-#define __PLAYER_H__
+#pragma once
 
 typedef struct{
     int x;
@@ -32,5 +31,3 @@ typedef struct{
 }Level;
 
 Level * newLevel(int points);
-
-#endif //__PLAYER_H__

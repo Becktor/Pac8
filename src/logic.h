@@ -1,7 +1,5 @@
 #include "entities.h"
-#ifndef _LOGIC__H__
-#define __LOGIC_H__
-
+#pragma once
 
 void playerMoveRight(Player * p);
 void playerMoveLeft(Player * p);
@@ -16,4 +14,3 @@ void enemyMove(Enemy * e);
 void enemyCharge(Enemy * e, Player * p);
 int playerCaught(Enemy *e, Player * p);
 void moveAll(Enemy ** es, Player *p, Level * lvl);
-#endif //__LOGIC_H__

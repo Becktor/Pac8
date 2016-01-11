@@ -1,8 +1,6 @@
-#ifndef _LEVELGEN__H__
-#define __LEVELGEN_H__
+#pragma once
 
 int * getLevel(int levelno);
 void drawPlayer(int playerPos, int * level);
 int draw(int * level, int tmp);
 int genLevel(int size);
-#endif //__LEVELGEN_H__
