@@ -1,6 +1,6 @@
 TARGET = bin/PacEight.o
 TARGETTST = bin/test.o
-LIBS = -lcursesw
+LIBS = -lncurses
 CC = gcc
 CFLAGS = -Ofast -g -Wall -std=gnu99
 
