@@ -9,20 +9,15 @@
 int drawModule(int *level,int pos){
     int points=0;
     for(int y=0; y < MODULE_LENGTH;y++){
-
         for(int x=0; x< MODULE_LENGTH;x++ ){
-
             int tmp=y*10+x;
             if(level[tmp]==0){
                 init_pair(6, COLOR_CYAN, COLOR_BLACK);
                 attron(COLOR_PAIR(6));
                 mvprintw(y,pos+x,"█");
                 attroff(COLOR_PAIR(6));
-
             }else if(level[tmp]==1){
-
                 mvprintw(y,pos+x," ");
-
             }else if(level[tmp]==3){
                 init_pair(2, COLOR_GREEN, COLOR_BLACK);
                 attron(COLOR_PAIR(2));
@@ -152,6 +147,7 @@ int * getLevel(int levelno)
                          1,0,1,1,0,0,0,0,1,1,
                          1,1,0,1,1,1,1,1,1,1,
                          0,0,0,0,0,0,0,0,0,0 };
+
 
     static int end0[100]={0,0,0,0,0,0,0,0,0,0,
                          1,0,1,1,0,1,1,1,1,0,

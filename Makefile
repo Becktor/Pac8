@@ -2,7 +2,7 @@ TARGET = bin/PacEight.o
 TARGETTST = bin/test.o
 LIBS = -lcursesw
 CC = gcc
-CFLAGS = -Ofast -g -Wall
+CFLAGS = -Ofast -g -Wall -std=gnu99
 
 .PHONY: default all clean
 

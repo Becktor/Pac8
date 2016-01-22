@@ -9,12 +9,12 @@
 #define SIZE_CONSTANT  10
 #define INIT_Y 1
 #define INIT_X 1
-#define INIT_ENEMY_SPEED 20
+#define INIT_ENEMY_SPEED 25
 #define AMOUNT_OF_ENEMIES 3
 
 int pacGame(){
     int mx=0, my=0;
-    getmaxyx(stdscr1, mx, my);
+    getmaxyx(stdscr, mx, my);
     int size=my/SIZE_CONSTANT;
     Enemy * enemies[AMOUNT_OF_ENEMIES];
     timeout(0);

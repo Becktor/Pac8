@@ -55,6 +55,7 @@ Enemy * newEnemy(int y, int x, float speed){
 typedef struct{
     int points;
     int game;
+
 }Level;
 
 Level * newLevel(int points){
@@ -67,5 +68,6 @@ Level * newLevel(int points){
     }
     lvl->points=points;
     lvl->game=1;
+
     return lvl;
 }
