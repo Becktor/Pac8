@@ -171,6 +171,8 @@ void enemyMoveLeft(Enemy * e){
     }
 }
 
+
+
 void enemyMoveUp(Enemy * e){
     int x= e->x;
     int y= e->y;
@@ -187,6 +189,10 @@ void enemyMoveUp(Enemy * e){
         e->charge=0;
     }
 }
+
+
+
+
 
 void enemyMoveDown(Enemy * e){
     int x= e->x;
