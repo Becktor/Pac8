@@ -13,21 +13,21 @@ int drawModule(int *level,int pos){
             int tmp=y*10+x;
             if(level[tmp]==0){
                 init_pair(6, COLOR_CYAN, COLOR_BLACK);
-                attron(COLOR_PAIR(6));
+                //attron(COLOR_PAIR(6));
                 mvprintw(y,pos+x,"█");
-                attroff(COLOR_PAIR(6));
+                //attroff(COLOR_PAIR(6));
             }else if(level[tmp]==1){
                 mvprintw(y,pos+x," ");
             }else if(level[tmp]==3){
                 init_pair(2, COLOR_GREEN, COLOR_BLACK);
-                attron(COLOR_PAIR(2));
+                // attron(COLOR_PAIR(2));
                 mvprintw(y,pos+x,"☺");
-                attroff(COLOR_PAIR(2));
+                //attroff(COLOR_PAIR(2));
             }else if(level[tmp]==9){
                 init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-                attron(COLOR_PAIR(3));
+                //attron(COLOR_PAIR(3));
                 mvprintw(y,pos+x,"O");
-                attroff(COLOR_PAIR(3));
+                //attroff(COLOR_PAIR(3));
                 points++;
             }
         }
